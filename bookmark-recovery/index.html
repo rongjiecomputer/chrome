@@ -21,14 +21,15 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
-Special thanks to David King, Hennie Rozengarden and other TC/RS Chromies in refining this tool.
+Special thanks to David King, Hennie Rozengarden, Jeroen Van Antwerpen,
+Cor Koomen and other TC/RS Chromies in refining this tool.
 -->
 <!DOCTYPE html>
 <html>
 <head>
 <title>Chrome Bookmarks Recovery Tool (Beta)</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1"/>
-<meta name="description" content="Tool to recover your lost Chrome bookmarks"/>
+<meta name="description" content="Tool to recover your lost Chrome bookmarks"/>
 <style>
 html, body {
 	font-family: "Helvetica", Arial, sans-serif;
@@ -45,6 +46,16 @@ header {
 h1 {
 	font-size: 32px;
 	font-weight: 400;
+}
+h4 {
+	color: #4285f4;
+}
+a {
+	color: #4285f4;
+	text-decoration: none;
+}
+a:hover {
+	text-decoration: underline;
 }
 main {
 	padding: 30px;
@@ -85,7 +96,7 @@ article.show {
 }
 code {
 	font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
-	background-color: #f7f7f7;
+	background-color: #f7f7f7;
 }
 #block {
 	max-width: 650px;
@@ -150,6 +161,9 @@ output a[data-disabled] {
  	color: #ccc;
  	text-decoration: line-through;
 }
+#other {
+	margin: 30px 0;
+}
 footer {
 	background-color: #f5f5f5;
 	overflow: hidden;
@@ -165,11 +179,14 @@ footer ul {
 footer li {
 	float: left;
 }
-footer a {
+footer li a {
 	color: #000;
 	line-height: 54px;
 	padding: 20px 14px;
 	text-decoration: none;
+}
+footer svg {
+	margin: 12px;
 }
 </style>
 </head>
@@ -190,7 +207,7 @@ footer a {
 		<ol>
 			<li>Copy <code>C:\Users\%username%\AppData\Local\Google\Chrome\User Data</code> into File Explorer.</li>
 			<li>In search bar, type <code>Bookmarks</code>, you will see a list of files named <code>Bookmarks</code> and/or <code>Bookmarks.bak</code>. (<i>Note: If there is more than one user using the same Chrome, bookmarks from other users will be listed too</i>)</li>
-			<li>Select all the files with mouse and drag them to the block below. (<i>Or you can start with the newest file first, then try the later ones</i>)</li>
+			<li>Select all the files with mouse and drag them to the block below.</li>
 			<li>Download all the HTML files.</li>
 			<li>Open each HTML file with Chrome and determine the HTML file that contains your bookmarks. (<i>Note: The largest file is most likely the correct one</i>)</li>
 			<li>In your Chrome, click the menu icon and go to Bookmarks &gt; Bookmark Manager.</li>
@@ -204,9 +221,9 @@ footer a {
 		<ol>
 			<li>In the Mac menu bar at the top of the screen, click Go.</li>
 			<li>Select Go to Folder.</li>
-			<li>Type <code>~/Library/Application Support/Google/Chrome/Default</code> and click Go.</li>
+			<li>Type <code>~/Library/Application Support/Google/Chrome</code> and click Go.</li>
 			<li>In search bar, type <code>Bookmarks</code>, you will see a list of files named <code>Bookmarks</code> and/or <code>Bookmarks.bak</code>. (<i>Note: If there is more than one user using the same Chrome, bookmarks from other users will be listed too</i>)</li>
-			<li>Select all the files with mouse and drag them to the block below. (<i>Or you can start with the newest file first, then try the later ones</i>)</li>
+			<li>Select all the files with mouse and drag them to the block below.</li>
 			<li>Download all the HTML files.</li>
 			<li>Open each HTML file with Chrome and determine the HTML file that contains your bookmarks. (<i>Note: The largest file is most likely the correct one</i>)</li>
 			<li>In your Chrome, click the menu icon and go to Bookmarks &gt; Bookmark Manager.</li>
@@ -218,12 +235,12 @@ footer a {
 	<article id="linux">
 		<p>Here is how to recover your lost bookmarks (Linux):</p>
 		<ol>
-			<li>Click Choose a file in the block below.</li>
-			<li>Go to <code>~/.config/google-chrome/Default</code>.</li>
+			<li>Open your file explorer (<i>Nautilus, Dolphin ...</i>).</li>
+			<li>Go to <code>~/.config/google-chrome</code> (<i>Use Ctrl+L on Nautilus</i>).</li>
 			<li>Search for <code>Bookmarks*</code>, you will see a list of files named <code>Bookmarks</code> and/or <code>Bookmarks.bak</code>. (<i>Note: If there is more than one user using the same Chrome, bookmarks from other users will be listed too</i>)</li>
-			<li>Select the newest/largest file first.</li>
-			<li>Download the HTML file generated.</li>
-			<li>Open the HTML file with Chrome and determine the HTML file that contains your bookmarks. (<i>Note: If the HTML file does not contain your bookmarks, go back to step 4 and try other file</i>)</li>
+			<li>Select all the files with mouse and drag them to the block below.</li>
+			<li>Download all the HTML files.</li>
+			<li>Open each HTML file with Chrome and determine the HTML file that contains your bookmarks. (<i>Note: The largest file is most likely the correct one</i>)</li>
 			<li>In your Chrome, click the menu icon and go to Bookmarks &gt; Bookmark Manager.</li>
 			<li>Click Organize &gt; Import bookmarks from HTML file.</li>
 			<li>Select the HTML file that contains your bookmarks.</li>
@@ -242,10 +259,31 @@ footer a {
 		</div>
 		<output id="output">The HTML file will be produced here later.</output>
 	</div>
+	<div id="other">
+		<h3>Other ways to recover bookmarks</h3>
+		<h4>Windows System Protection</h4>
+		<p>If <a href="http://windows.microsoft.com/en-us/windows7/what-is-system-protection">Windows System Protection</a> is turned on, Windows will automatically stores previous versions of your files. To restore such a version of your bookmarks files:</p>
+		<ol>
+			<li>Follow the step 1 and 2 above to find your bookmarks files.</li>
+			<li>Right click on a bookmark file.</li>
+			<li>Click "properties".</li>
+			<li>Go to "previous versions" tab.</li>
+			<li>Select a version from a date when everything was fine.</li>
+		</ol>
+		<h4>Personal backup</h4>
+		<p>In the case when backups of your computer are available, find the bookmarks files in the backups, upload them to this tool and continue with the steps above.</p>
+		<h4>Recover from old devices</h4>
+		<p>Do you have a device (e.g: old laptop) that is signed in to your Google Account and it hasn't been synced since the moment your bookmarks were lost? If so, find the files in this device, upload them to this tool and continue with the steps above.</p>
+	</div>
 	<p><i>Disclaimer: this is not an official Google product.</i></p>
 </main>
 
 <footer>
+	<a href="https://github.com/rongjiecomputer/chrome/tree/gh-pages/bookmark-recovery">
+		<svg width="24" height="24" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+			<path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59 0.4 0.07 0.55-0.17 0.55-0.38 0-0.19-0.01-0.82-0.01-1.49-2.01 0.37-2.53-0.49-2.69-0.94-0.09-0.23-0.48-0.94-0.82-1.13-0.28-0.15-0.68-0.52-0.01-0.53 0.63-0.01 1.08 0.58 1.23 0.82 0.72 1.21 1.87 0.87 2.33 0.66 0.07-0.52 0.28-0.87 0.51-1.07-1.78-0.2-3.64-0.89-3.64-3.95 0-0.87 0.31-1.59 0.82-2.15-0.08-0.2-0.36-1.02 0.08-2.12 0 0 0.67-0.21 2.2 0.82 0.64-0.18 1.32-0.27 2-0.27 0.68 0 1.36 0.09 2 0.27 1.53-1.04 2.2-0.82 2.2-0.82 0.44 1.1 0.16 1.92 0.08 2.12 0.51 0.56 0.82 1.27 0.82 2.15 0 3.07-1.87 3.75-3.65 3.95 0.29 0.25 0.54 0.73 0.54 1.48 0 1.07-0.01 1.93-0.01 2.2 0 0.21 0.15 0.46 0.55 0.38C13.71 14.53 16 11.53 16 8 16 3.58 12.42 0 8 0z"/>
+		</svg>
+	</a>
 	<ul>
 		<li><a href="https://support.google.com/chrome/">Chrome Help Center</a></li>
 		<li><a href="https://productforums.google.com/forum/#!forum/chrome">Chrome Help Forum</a></li>
