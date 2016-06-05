@@ -460,10 +460,10 @@ window.addEventListener('hashchange', handleHashChange, false);
 if (location.hash == '') location.hash = '#windows';
 handleHashChange();
 function toggleZip(e) {
-  this.parentNode.classList.toggle("unzip");
+	this.parentNode.classList.toggle("unzip");
 }
 document.querySelectorAll(".zip h4").forEach(function(h3) {
-  h3.addEventListener('click', toggleZip, false);
+	h3.addEventListener('click', toggleZip, false);
 });
 </script>
 </body>
