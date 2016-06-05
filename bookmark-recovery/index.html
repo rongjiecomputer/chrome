@@ -47,15 +47,21 @@ h1 {
 	font-size: 32px;
 	font-weight: 400;
 }
-h4 {
-	color: #4285f4;
-}
 a {
 	color: #4285f4;
 	text-decoration: none;
 }
 a:hover {
 	text-decoration: underline;
+}
+.github-link {
+	display: block;
+	position: absolute;
+	width: 60px;
+	height: 60px;
+	top: 0;
+	right: 0;
+	z-index: 100;
 }
 main {
 	padding: 30px;
@@ -100,6 +106,7 @@ code {
 }
 #block {
 	max-width: 650px;
+	margin-bottom: 30px;
 	padding: 10px;
 	border: 1px solid #ccc;
 }
@@ -161,32 +168,60 @@ output a[data-disabled] {
  	color: #ccc;
  	text-decoration: line-through;
 }
-#other {
-	margin: 30px 0;
+.zip {
+	height: 44px;
+	border-top: 1px solid #e0e0e0;
+	overflow: hidden;
+}
+.zip h4 {
+	color: #4285f4;
+	font-size: 14px;
+	font-weight: normal;
+	padding: 16px 50px 12px 16px;
+	margin: 0;
+	position: relative;
+}
+.zip h4:before {
+	background: no-repeat url("data:image/svg+xml,%3Csvg width='24' height='24' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill='%234285f4' d='M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z'/%3E%3C/svg%3E");
+	background-size: 24px;
+	content: '';
+	margin-top: -12px;
+	position: absolute;
+	right: 18px;
+	top: 50%;
+	width: 22px;
+	height: 22px;
+	transition: transform 0.3s;
+}
+.unzip {
+	height: auto;
+}
+.unzip h4:before {
+	transform: rotate(-180deg);
+}
+.zip-content {
+	margin-left: 18px;
+	padding: 1px 26px 19px 16px;
+	overflow: auto;
+	position: relative;
+}
+.zip-content:before {
+	background-color: #e0e0e0;
+	content: '';
+	position: absolute;
+	width: 2px;
+	height: 100%;
+	left: 0;
+	top: -19px;
 }
 footer {
 	background-color: #f5f5f5;
-	overflow: hidden;
+	border-top: 1px solid #e5e5e5;
 }
-footer ul, footer li {
-	margin: 0;
-	padding: 0;
-}
-footer ul {
-	float: right;
-	list-style-type: none;
-}
-footer li {
-	float: left;
-}
-footer li a {
-	color: #000;
-	line-height: 54px;
+footer a {
+	display: inline-block;
 	padding: 20px 14px;
-	text-decoration: none;
-}
-footer svg {
-	margin: 12px;
+	color: #999;
 }
 </style>
 </head>
@@ -195,6 +230,13 @@ footer svg {
 <header>
 	<h1>Chrome Bookmarks Recovery Tool (Beta)</h1>
 </header>
+
+<a class="github-link" href="https://github.com/rongjiecomputer/chrome/tree/gh-pages/bookmark-recovery" title="Source on Github">
+	<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 60.5 60.5" width="60" height="60">
+		<polygon fill="#9dacb3" points="60.5,60.5 0,0 60.5,0"/>
+		<path fill="#f5f5f5" d="M43.1,5.8c-6.6,0-12,5.4-12,12c0,5.3,3.4,9.8,8.2,11.4c0.6,0.1,0.8-0.3,0.8-0.6c0-0.3,0-1,0-2c-3.3,0.7-4-1.6-4-1.6c-0.5-1.4-1.3-1.8-1.3-1.8c-1.1-0.7,0.1-0.7,0.1-0.7c1.2,0.1,1.8,1.2,1.8,1.2c1.1,1.8,2.8,1.3,3.5,1c0.1-0.8,0.4-1.3,0.8-1.6c-2.7-0.3-5.5-1.3-5.5-5.9c0-1.3,0.5-2.4,1.2-3.2c-0.1-0.3-0.5-1.5,0.1-3.2c0,0,1-0.3,3.3,1.2c1-0.3,2-0.4,3-0.4c1,0,2,0.1,3,0.4c2.3-1.6,3.3-1.2,3.3-1.2c0.7,1.7,0.2,2.9,0.1,3.2c0.8,0.8,1.2,1.9,1.2,3.2c0,4.6-2.8,5.6-5.5,5.9c0.4,0.4,0.8,1.1,0.8,2.2c0,1.6,0,2.9,0,3.3c0,0.3,0.2,0.7,0.8,0.6c4.8-1.6,8.2-6.1,8.2-11.4C55.1,11.2,49.7,5.8,43.1,5.8z"/>
+	</svg>
+</a>
 
 <main>
 	<ul id="tabs">
@@ -259,35 +301,44 @@ footer svg {
 		</div>
 		<output id="output">The HTML file will be produced here later.</output>
 	</div>
-	<div id="other">
-		<h3>Other ways to recover bookmarks</h3>
+	<h3>Other ways to recover bookmarks</h3>
+	<div class="zip">
 		<h4>Windows System Protection</h4>
-		<p>If <a href="http://windows.microsoft.com/en-us/windows7/what-is-system-protection">Windows System Protection</a> is turned on, Windows will automatically stores previous versions of your files. To restore such a version of your bookmarks files:</p>
-		<ol>
-			<li>Follow the step 1 and 2 above to find your bookmarks files.</li>
-			<li>Right click on a bookmark file.</li>
-			<li>Click "properties".</li>
-			<li>Go to "previous versions" tab.</li>
-			<li>Select a version from a date when everything was fine.</li>
-		</ol>
+		<div class="zip-content">
+			<p>If <a href="http://windows.microsoft.com/en-us/windows7/what-is-system-protection">Windows System Protection</a> is turned on, Windows will automatically stores previous versions of your files. To restore such a version of your bookmarks files:</p>
+			<ol>
+				<li>Follow the step 1 and 2 above to find your bookmarks files.</li>
+				<li>Right click on a bookmark file.</li>
+				<li>Click "properties".</li>
+				<li>Go to "previous versions" tab.</li>
+				<li>Select a version from a date when everything was fine.</li>
+			</ol>
+		</div>
+	</div>
+	<div class="zip">
 		<h4>Personal backup</h4>
-		<p>In the case when backups of your computer are available, find the bookmarks files in the backups, upload them to this tool and continue with the steps above.</p>
+		<div class="zip-content">
+			<p>In the case when backups of your computer are available, find the bookmarks files in the backups, upload them to this tool and continue with the steps above.</p>
+		</div>
+	</div>
+	<div class="zip">
 		<h4>Recover from old devices</h4>
-		<p>Do you have a device (e.g: old laptop) that is signed in to your Google Account and it hasn't been synced since the moment your bookmarks were lost? If so, find the files in this device, upload them to this tool and continue with the steps above.</p>
+		<div class="zip-content">
+			<p>Do you have a device (e.g: old laptop) that is signed in to your Google Account and it hasn't been synced since the moment your bookmarks were lost? If so, find the files in this device, upload them to this tool and continue with the steps above.</p>
+		</div>
+	</div>
+	<div class="zip">
+		<h4>Tips and tricks</h4>
+		<div class="zip-content">
+			<p>You can use this tool or <i>Export bookmarks</i> function in Bookmark Manager to generate HTML file that can be used as archive/backup of your bookmarks. Regularly making backup is useful in case your bookmarks get lost again in the future.</p>
+		</div>
 	</div>
 	<p><i>Disclaimer: this is not an official Google product.</i></p>
 </main>
 
 <footer>
-	<a href="https://github.com/rongjiecomputer/chrome/tree/gh-pages/bookmark-recovery">
-		<svg width="24" height="24" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
-			<path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59 0.4 0.07 0.55-0.17 0.55-0.38 0-0.19-0.01-0.82-0.01-1.49-2.01 0.37-2.53-0.49-2.69-0.94-0.09-0.23-0.48-0.94-0.82-1.13-0.28-0.15-0.68-0.52-0.01-0.53 0.63-0.01 1.08 0.58 1.23 0.82 0.72 1.21 1.87 0.87 2.33 0.66 0.07-0.52 0.28-0.87 0.51-1.07-1.78-0.2-3.64-0.89-3.64-3.95 0-0.87 0.31-1.59 0.82-2.15-0.08-0.2-0.36-1.02 0.08-2.12 0 0 0.67-0.21 2.2 0.82 0.64-0.18 1.32-0.27 2-0.27 0.68 0 1.36 0.09 2 0.27 1.53-1.04 2.2-0.82 2.2-0.82 0.44 1.1 0.16 1.92 0.08 2.12 0.51 0.56 0.82 1.27 0.82 2.15 0 3.07-1.87 3.75-3.65 3.95 0.29 0.25 0.54 0.73 0.54 1.48 0 1.07-0.01 1.93-0.01 2.2 0 0.21 0.15 0.46 0.55 0.38C13.71 14.53 16 11.53 16 8 16 3.58 12.42 0 8 0z"/>
-		</svg>
-	</a>
-	<ul>
-		<li><a href="https://support.google.com/chrome/">Chrome Help Center</a></li>
-		<li><a href="https://productforums.google.com/forum/#!forum/chrome">Chrome Help Forum</a></li>
-	</ul>
+	<a href="https://support.google.com/chrome/">Chrome Help Center</a>
+	<a href="https://productforums.google.com/forum/#!forum/chrome">Chrome Help Forum</a>
 </footer>
 
 <script>
@@ -408,6 +459,12 @@ function handleHashChange(e) {
 window.addEventListener('hashchange', handleHashChange, false);
 if (location.hash == '') location.hash = '#windows';
 handleHashChange();
+function toggleZip(e) {
+  this.parentNode.classList.toggle("unzip");
+}
+document.querySelectorAll(".zip h4").forEach(function(h3) {
+  h3.addEventListener('click', toggleZip, false);
+});
 </script>
 </body>
 </html>
