@@ -27,10 +27,21 @@ Cor Koomen and other TC/RS Chromies in refining this tool.
 <!DOCTYPE html>
 <html>
 <head>
-<title>Chrome Bookmarks Recovery Tool (Beta)</title>
-<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1"/>
-<meta name="description" content="Tool to recover your lost Chrome bookmarks"/>
+<title>Chrome Bookmarks Recovery Tool</title>
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1">
+<meta name="description" content="Tool to recover your lost Chrome bookmarks">
 <link rel="canonical" href="https://rongjiecomputer.github.io/chrome/bookmark-recovery/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Chrome Bookmarks Recovery Tool">
+<meta property="og:url" content="https://rongjiecomputer.github.io/chrome/bookmark-recovery/">
+<meta property="og:site_name" content="rongjiecomputer.github.io">
+<meta property="og:description" content="Tool to recover your lost Chrome bookmarks">
+<meta property="og:image" content="https://rongjiecomputer.github.io/chrome/bookmark-recovery/share.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Chrome Bookmarks Recovery Tool">
+<meta name="twitter:url" content="https://rongjiecomputer.github.io/chrome/bookmark-recovery/">
+<meta name="twitter:description" content="Tool to recover your lost Chrome bookmarks">
+<meta name="twitter:image" content="https://rongjiecomputer.github.io/chrome/bookmark-recovery/share.png">
 <style>
 html, body {
 	font-family: "Helvetica", Arial, sans-serif;
@@ -229,7 +240,7 @@ footer a {
 <body>
 
 <header>
-	<h1>Chrome Bookmarks Recovery Tool (Beta)</h1>
+	<h1>Chrome Bookmarks Recovery Tool</h1>
 </header>
 
 <a class="github-link" href="https://github.com/rongjiecomputer/chrome/tree/gh-pages/bookmark-recovery" title="Source on Github">
@@ -245,7 +256,7 @@ footer a {
 		<li data-hash="#mac"><a href="#mac">Mac</a></li>
 		<li data-hash="#linux"><a href="#linux">Linux</a></li>
 	</ul>
-	<article id="windows">
+	<article id="windows-soln">
 		<p>Here is how to recover your lost bookmarks (Windows):</p>
 		<ol>
 			<li>Copy <code>C:\Users\%username%\AppData\Local\Google\Chrome\User Data</code> into File Explorer.</li>
@@ -259,7 +270,7 @@ footer a {
 			<li>Your bookmarks should now be imported back to Chrome.</li>
 		</ol>
 	</article>
-	<article id="mac">
+	<article id="mac-soln">
 		<p>Here is how to recover your lost bookmarks (Mac):</p>
 		<ol>
 			<li>In the Mac menu bar at the top of the screen, click Go.</li>
@@ -275,7 +286,7 @@ footer a {
 			<li>Your bookmarks should now be imported back to Chrome.</li>
 		</ol>
 	</article>
-	<article id="linux">
+	<article id="linux-soln">
 		<p>Here is how to recover your lost bookmarks (Linux):</p>
 		<ol>
 			<li>Open your file explorer (<i>Nautilus, Dolphin ...</i>).</li>
@@ -443,9 +454,9 @@ dropZone.addEventListener('drop', handleFileSelect, false);
 dropZone.addEventListener('dragleave', handleDragLeave, false);
 var tabs = document.getElementById('tabs');
 var articles = []
-articles['#windows'] = document.getElementById('windows');
-articles['#mac'] = document.getElementById('mac');
-articles['#linux'] = document.getElementById('linux');
+articles['#windows'] = document.getElementById('windows-soln');
+articles['#mac'] = document.getElementById('mac-soln');
+articles['#linux'] = document.getElementById('linux-soln');
 function handleHashChange(e) {
 	for (var tab = tabs.firstElementChild; tab; tab = tab.nextElementSibling) {
 		tab.classList.remove('active');
@@ -464,7 +475,7 @@ function toggleZip(e) {
 	this.parentNode.classList.toggle("unzip");
 }
 document.querySelectorAll(".zip h4").forEach(function(h4) {
-	h3.addEventListener('click', toggleZip, false);
+	h4.addEventListener('click', toggleZip, false);
 });
 </script>
 </body>
