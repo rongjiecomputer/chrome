@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <!--
 MIT License
 
@@ -24,8 +25,7 @@ SOFTWARE.
 Special thanks to David King, Hennie Rozengarden, Jeroen Van Antwerpen,
 Cor Koomen and other TC/RS Chromies in refining this tool.
 -->
-<!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <title>Chrome Bookmarks Recovery Tool</title>
 <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1">
@@ -78,23 +78,20 @@ a:hover {
 main {
 	padding: 30px;
 }
-p, li {
+p {
 	line-height: 1.5em;
 	word-break: break-word;
 }
 #tabs {
-	list-style-type: none;
 	height: 48px;
 	margin-bottom: 32px;
 	padding: 0;
 	overflow: hidden;
 	border-bottom: 1px solid #e0e0e0;
 }
-#tabs li {
-	float: left;
-}
-#tabs li a {
+#tabs a {
 	display: inline-block;
+	float: left;
 	color: #9e9e9e;
 	font-weight: 500;
 	line-height: 47px;
@@ -102,14 +99,14 @@ p, li {
 	padding: 0 10px;
 	text-decoration: none;
 }
-#tabs li.active a {
+#tabs .active {
 	color: #4285f4;
 	border-bottom: 2px solid #4285f4;
 }
-article {
+.soln {
 	display: none;
 }
-article.show {
+.show {
 	display: block;
 }
 code {
@@ -154,6 +151,9 @@ input[type="file"] {
 	bottom: 0;
 	opacity: 0;
 }
+#tooltip {
+	display: none;
+}
 #drop_zone svg, #drop_zone span {
 	display: block;
 	margin: auto;
@@ -181,19 +181,19 @@ output a[data-disabled] {
  	text-decoration: line-through;
 }
 .zip {
-	height: 44px;
 	border-top: 1px solid #e0e0e0;
-	overflow: hidden;
 }
-.zip h4 {
+.zip-h {
+	background-color: #fff;
 	color: #4285f4;
 	font-size: 14px;
 	font-weight: normal;
 	padding: 16px 50px 12px 16px;
 	margin: 0;
 	position: relative;
+	z-index: 1;
 }
-.zip h4:before {
+.zip-h:before {
 	background: no-repeat url("data:image/svg+xml,%3Csvg width='24' height='24' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill='%234285f4' d='M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z'/%3E%3C/svg%3E");
 	background-size: 24px;
 	content: '';
@@ -205,16 +205,10 @@ output a[data-disabled] {
 	height: 22px;
 	transition: transform 0.3s;
 }
-.unzip {
-	height: auto;
-}
-.unzip h4:before {
-	transform: rotate(-180deg);
-}
 .zip-content {
+	display: none;
 	margin-left: 18px;
 	padding: 1px 26px 19px 16px;
-	overflow: auto;
 	position: relative;
 }
 .zip-content:before {
@@ -225,6 +219,12 @@ output a[data-disabled] {
 	height: 100%;
 	left: 0;
 	top: -19px;
+}
+.unzip .zip-h:before {
+	transform: rotate(-180deg);
+}
+.unzip .zip-content {
+	display: block;
 }
 footer {
 	background-color: #f5f5f5;
@@ -243,20 +243,13 @@ footer a {
 	<h1>Chrome Bookmarks Recovery Tool</h1>
 </header>
 
-<a class="github-link" href="https://github.com/rongjiecomputer/chrome/tree/gh-pages/bookmark-recovery" title="Source on Github">
-	<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 60.5 60.5" width="60" height="60">
-		<polygon fill="#9dacb3" points="60.5,60.5 0,0 60.5,0"/>
-		<path fill="#f5f5f5" d="M43.1,5.8c-6.6,0-12,5.4-12,12c0,5.3,3.4,9.8,8.2,11.4c0.6,0.1,0.8-0.3,0.8-0.6c0-0.3,0-1,0-2c-3.3,0.7-4-1.6-4-1.6c-0.5-1.4-1.3-1.8-1.3-1.8c-1.1-0.7,0.1-0.7,0.1-0.7c1.2,0.1,1.8,1.2,1.8,1.2c1.1,1.8,2.8,1.3,3.5,1c0.1-0.8,0.4-1.3,0.8-1.6c-2.7-0.3-5.5-1.3-5.5-5.9c0-1.3,0.5-2.4,1.2-3.2c-0.1-0.3-0.5-1.5,0.1-3.2c0,0,1-0.3,3.3,1.2c1-0.3,2-0.4,3-0.4c1,0,2,0.1,3,0.4c2.3-1.6,3.3-1.2,3.3-1.2c0.7,1.7,0.2,2.9,0.1,3.2c0.8,0.8,1.2,1.9,1.2,3.2c0,4.6-2.8,5.6-5.5,5.9c0.4,0.4,0.8,1.1,0.8,2.2c0,1.6,0,2.9,0,3.3c0,0.3,0.2,0.7,0.8,0.6c4.8-1.6,8.2-6.1,8.2-11.4C55.1,11.2,49.7,5.8,43.1,5.8z"/>
-	</svg>
-</a>
-
 <main>
-	<ul id="tabs">
-		<li data-hash="#windows"><a href="#windows">Windows</a></li>
-		<li data-hash="#mac"><a href="#mac">Mac</a></li>
-		<li data-hash="#linux"><a href="#linux">Linux</a></li>
-	</ul>
-	<article id="windows-soln">
+	<div id="tabs" role="tablist">
+		<a href="#windows" id="windows-tab" role="tab" aria-controls="windows-soln">Windows</a>
+		<a href="#mac" id="mac-tab" role="tab" aria-controls="mac-soln">Mac</a>
+		<a href="#linux" id="linux-tab" role="tab" aria-controls="linux-soln">Linux</a>
+	</div>
+	<div class="soln" id="windows-soln" role="tabpanel" aria-hidden="true">
 		<p>Here is how to recover your lost bookmarks (Windows):</p>
 		<ol>
 			<li>Copy <code>C:\Users\%username%\AppData\Local\Google\Chrome\User Data</code> into File Explorer.</li>
@@ -269,8 +262,8 @@ footer a {
 			<li>Select the HTML file that contains your bookmarks.</li>
 			<li>Your bookmarks should now be imported back to Chrome.</li>
 		</ol>
-	</article>
-	<article id="mac-soln">
+	</div>
+	<div class="soln" id="mac-soln" role="tabpanel" aria-hidden="true">
 		<p>Here is how to recover your lost bookmarks (Mac):</p>
 		<ol>
 			<li>In the Mac menu bar at the top of the screen, click Go.</li>
@@ -285,8 +278,8 @@ footer a {
 			<li>Select the HTML file that contains your bookmarks.</li>
 			<li>Your bookmarks should now be imported back to Chrome.</li>
 		</ol>
-	</article>
-	<article id="linux-soln">
+	</div>
+	<div class="soln" id="linux-soln" role="tabpanel" aria-hidden="true">
 		<p>Here is how to recover your lost bookmarks (Linux):</p>
 		<ol>
 			<li>Open your file explorer (<i>Nautilus, Dolphin ...</i>).</li>
@@ -300,23 +293,24 @@ footer a {
 			<li>Select the HTML file that contains your bookmarks.</li>
 			<li>Your bookmarks should now be imported back to Chrome.</li>
 		</ol>
-	</article>
-	<div id="block">
+	</div>
+	<form id="block" tabindex="-1">
 		<div id="drop_zone">
 			<svg fill="#bbb" width="48" height="48" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
 				<path d="M9 16h6v-6h4l-7-7-7 7h4zm-4 2h14v2H5z"/>
 			</svg>
 			<span>
-				<input type="file" id="input"/>
+				<input tabindex="0" type="file" multiple id="input" aria-label="Your Chrome Bookmarks files" aria-describedby="tooltip"/>
 				<b>Choose a file</b> or drag it here
 			</span>
+			<div role="tooltip" id="tooltip">Search with the keyword of "Bookmarks" and select all the files found.</div>
 		</div>
-		<output id="output">The HTML file will be produced here later.</output>
-	</div>
+		<output id="output" role="alert" aria-live="assertive" aria-hidden="true">The HTML file will be produced here later.</output>
+	</form>
 	<h3>Other ways to recover bookmarks</h3>
 	<div class="zip">
-		<h4>Windows System Protection</h4>
-		<div class="zip-content">
+		<div class="zip-h" role="button" aria-expanded="false" aria-controls="zip-1" tabindex="0">Windows System Protection</div>
+		<div id="zip-1" aria-hidden="true" class="zip-content">
 			<p>If <a href="http://windows.microsoft.com/en-us/windows7/what-is-system-protection">Windows System Protection</a> is turned on, Windows will automatically stores previous versions of your files. To restore such a version of your bookmarks files:</p>
 			<ol>
 				<li>Follow the step 1 and 2 above to find your bookmarks files.</li>
@@ -328,20 +322,20 @@ footer a {
 		</div>
 	</div>
 	<div class="zip">
-		<h4>Personal backup</h4>
-		<div class="zip-content">
+		<div class="zip-h" role="button" aria-expanded="false" aria-controls="zip-2" tabindex="0">Personal backup</div>
+		<div id="zip-2" aria-hidden="true" class="zip-content">
 			<p>In the case when backups of your computer are available, find the bookmarks files in the backups, upload them to this tool and continue with the steps above.</p>
 		</div>
 	</div>
 	<div class="zip">
-		<h4>Recover from old devices</h4>
-		<div class="zip-content">
+		<div class="zip-h" role="button" aria-expanded="false" aria-controls="zip-3" tabindex="0">Recover from old devices</div>
+		<div id="zip-3" aria-hidden="true" class="zip-content">
 			<p>Do you have a device (e.g: old laptop) that is signed in to your Google Account and it hasn't been synced since the moment your bookmarks were lost? If so, find the files in this device, upload them to this tool and continue with the steps above.</p>
 		</div>
 	</div>
 	<div class="zip">
-		<h4>Tips and tricks</h4>
-		<div class="zip-content">
+		<div class="zip-h" role="button" aria-expanded="false" aria-controls="zip-4" tabindex="0">Tips and tricks</div>
+		<div id="zip-4" aria-hidden="true" class="zip-content">
 			<p>You can use this tool or <i>Export bookmarks</i> function in Bookmark Manager to generate HTML file that can be used as archive/backup of your bookmarks. Regularly making backup is useful in case your bookmarks get lost again in the future.</p>
 		</div>
 	</div>
@@ -353,18 +347,25 @@ footer a {
 	<a href="https://productforums.google.com/forum/#!forum/chrome">Chrome Help Forum</a>
 </footer>
 
+<a class="github-link" href="https://github.com/rongjiecomputer/chrome/tree/gh-pages/bookmark-recovery" title="Source on Github">
+	<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 60.5 60.5" width="60" height="60">
+		<polygon fill="#9dacb3" points="60.5,60.5 0,0 60.5,0"/>
+		<path fill="#f5f5f5" d="M43.1,5.8c-6.6,0-12,5.4-12,12c0,5.3,3.4,9.8,8.2,11.4c0.6,0.1,0.8-0.3,0.8-0.6c0-0.3,0-1,0-2c-3.3,0.7-4-1.6-4-1.6c-0.5-1.4-1.3-1.8-1.3-1.8c-1.1-0.7,0.1-0.7,0.1-0.7c1.2,0.1,1.8,1.2,1.8,1.2c1.1,1.8,2.8,1.3,3.5,1c0.1-0.8,0.4-1.3,0.8-1.6c-2.7-0.3-5.5-1.3-5.5-5.9c0-1.3,0.5-2.4,1.2-3.2c-0.1-0.3-0.5-1.5,0.1-3.2c0,0,1-0.3,3.3,1.2c1-0.3,2-0.4,3-0.4c1,0,2,0.1,3,0.4c2.3-1.6,3.3-1.2,3.3-1.2c0.7,1.7,0.2,2.9,0.1,3.2c0.8,0.8,1.2,1.9,1.2,3.2c0,4.6-2.8,5.6-5.5,5.9c0.4,0.4,0.8,1.1,0.8,2.2c0,1.6,0,2.9,0,3.3c0,0.3,0.2,0.7,0.8,0.6c4.8-1.6,8.2-6.1,8.2-11.4C55.1,11.2,49.7,5.8,43.1,5.8z"/>
+	</svg>
+</a>
+
 <script>
 'use strict';
 function parse(backup) {
 	function walk(data) {
-		if (data.type == "folder") {
+		if (data.type == 'folder') {
 			html += '<DT><H3 ADD_DATE="' + data.date_added + '" LAST_MODIFIED="' + data.date_modified + '">' + data.name + '</H3>\n';
 			html += '<DL>\n'
 			for (var i = 0; i < data.children.length; i++) {
 				walk(data.children[i]);
 			}
 			html += '</DL></DT>\n';
-		} else { // data.type == "url"
+		} else { // data.type == 'url'
 			html += '<DT><A HREF="' + data.url + '" ADD_DATE="' + data.date_added + '">' + data.name + '</A></DT>\n';
 		}
 	}
@@ -421,6 +422,7 @@ function handleFile(e) {
 		ul.appendChild(readFile(files[i]));
 	}
 	output.innerHTML = '';
+	output.setAttribute('aria-hidden', false);
 	output.appendChild(ul);
 }
 input.addEventListener('change', handleFile, false);
@@ -453,29 +455,37 @@ dropZone.addEventListener('dragover', handleDragOver, false);
 dropZone.addEventListener('drop', handleFileSelect, false);
 dropZone.addEventListener('dragleave', handleDragLeave, false);
 var tabs = document.getElementById('tabs');
-var articles = []
-articles['#windows'] = document.getElementById('windows-soln');
-articles['#mac'] = document.getElementById('mac-soln');
-articles['#linux'] = document.getElementById('linux-soln');
+var solns = {};
+solns['#windows'] = document.getElementById('windows-soln');
+solns['#mac'] = document.getElementById('mac-soln');
+solns['#linux'] = document.getElementById('linux-soln');
 function handleHashChange(e) {
 	for (var tab = tabs.firstElementChild; tab; tab = tab.nextElementSibling) {
 		tab.classList.remove('active');
+		tab.setAttribute('aria-selected', false);
 	}
-	for (var article in articles) {
-		articles[article].classList.remove('show');
+	for (var soln in solns) {
+		solns[soln].classList.remove('show');
+		solns[soln].setAttribute('aria-hidden', true);
 	}
 	var hash = location.hash;
-	tabs.querySelector('li[data-hash="' + hash + '"]').classList.add('active');
-	articles[hash].classList.add('show');
+	var tab = tabs.querySelector(hash+'-tab');
+	tab.classList.add('active');
+	tab.setAttribute('aria-selected', true);
+	var soln = solns[hash];
+	soln.classList.add('show');
+	soln.setAttribute('aria-hidden', false);
 }
 window.addEventListener('hashchange', handleHashChange, false);
 if (location.hash == '') location.hash = '#windows';
 handleHashChange();
 function toggleZip(e) {
-	this.parentNode.classList.toggle("unzip");
+	var visible = this.parentNode.classList.toggle('unzip');
+	this.setAttribute('aria-expanded', visible);
+	this.nextElementSibling.setAttribute('aria-hidden', !visible);
 }
-document.querySelectorAll(".zip h4").forEach(function(h4) {
-	h4.addEventListener('click', toggleZip, false);
+document.querySelectorAll('.zip-h').forEach(function(h) {
+	h.addEventListener('click', toggleZip, false);
 });
 </script>
 </body>
