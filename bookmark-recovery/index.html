@@ -484,7 +484,7 @@ function toggleZip(e) {
 	this.setAttribute('aria-expanded', visible);
 	this.nextElementSibling.setAttribute('aria-hidden', !visible);
 }
-document.querySelectorAll('.zip-h').forEach(function(h) {
+[].forEach.call(document.querySelectorAll('.zip-h'), function(h) {
 	h.addEventListener('click', toggleZip, false);
 });
 </script>
