@@ -184,6 +184,7 @@ output a[data-disabled] {
 	border-top: 1px solid #e0e0e0;
 }
 .zip-h {
+	display: block;
 	background-color: #fff;
 	color: #4285f4;
 	font-size: 14px;
@@ -192,6 +193,9 @@ output a[data-disabled] {
 	margin: 0;
 	position: relative;
 	z-index: 1;
+}
+.zip-h:hover {
+	text-decoration: none;
 }
 .zip-h:before {
 	background: no-repeat url("data:image/svg+xml,%3Csvg width='24' height='24' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill='%234285f4' d='M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z'/%3E%3C/svg%3E");
@@ -309,7 +313,7 @@ footer a {
 	</form>
 	<h3>Other ways to recover bookmarks</h3>
 	<div class="zip">
-		<div class="zip-h" role="button" aria-expanded="false" aria-controls="zip-1" tabindex="0">Windows System Protection</div>
+		<a class="zip-h" aria-expanded="false" aria-controls="zip-1" href="#">Windows System Protection</a>
 		<div id="zip-1" aria-hidden="true" class="zip-content">
 			<p>If <a href="http://windows.microsoft.com/en-us/windows7/what-is-system-protection">Windows System Protection</a> is turned on, Windows will automatically stores previous versions of your files. To restore such a version of your bookmarks files:</p>
 			<ol>
@@ -322,19 +326,19 @@ footer a {
 		</div>
 	</div>
 	<div class="zip">
-		<div class="zip-h" role="button" aria-expanded="false" aria-controls="zip-2" tabindex="0">Personal backup</div>
+		<a class="zip-h" aria-expanded="false" aria-controls="zip-2" href="#">Personal backup</a>
 		<div id="zip-2" aria-hidden="true" class="zip-content">
 			<p>In the case when backups of your computer are available, find the bookmarks files in the backups, upload them to this tool and continue with the steps above.</p>
 		</div>
 	</div>
 	<div class="zip">
-		<div class="zip-h" role="button" aria-expanded="false" aria-controls="zip-3" tabindex="0">Recover from old devices</div>
+		<a class="zip-h" aria-expanded="false" aria-controls="zip-3" href="#">Recover from old devices</a>
 		<div id="zip-3" aria-hidden="true" class="zip-content">
 			<p>Do you have a device (e.g: old laptop) that is signed in to your Google Account and it hasn't been synced since the moment your bookmarks were lost? If so, find the files in this device, upload them to this tool and continue with the steps above.</p>
 		</div>
 	</div>
 	<div class="zip">
-		<div class="zip-h" role="button" aria-expanded="false" aria-controls="zip-4" tabindex="0">Tips and tricks</div>
+		<a class="zip-h" aria-expanded="false" aria-controls="zip-4" href="#">Tips and tricks</a>
 		<div id="zip-4" aria-hidden="true" class="zip-content">
 			<p>You can use this tool or <i>Export bookmarks</i> function in Bookmark Manager to generate HTML file that can be used as archive/backup of your bookmarks. Regularly making backup is useful in case your bookmarks get lost again in the future.</p>
 		</div>
@@ -480,6 +484,7 @@ window.addEventListener('hashchange', handleHashChange, false);
 if (location.hash == '') location.hash = '#windows';
 handleHashChange();
 function toggleZip(e) {
+	e.preventDefault();
 	var visible = this.parentNode.classList.toggle('unzip');
 	this.setAttribute('aria-expanded', visible);
 	this.nextElementSibling.setAttribute('aria-hidden', !visible);
