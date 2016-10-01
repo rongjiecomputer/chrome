@@ -28,7 +28,8 @@ Cor Koomen and other TC/RS Chromies in refining this tool.
 <html lang="en">
 <head>
 <title>Chrome Bookmarks Recovery Tool</title>
-<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,minimum-scale=1.0">
 <meta name="description" content="Tool to recover your lost Chrome bookmarks">
 <link rel="canonical" href="https://rongjiecomputer.github.io/chrome/bookmark-recovery/">
 <meta property="og:type" content="website">
@@ -253,7 +254,7 @@ footer a {
 		<a href="#mac" id="mac-tab" role="tab" aria-controls="mac-soln">Mac</a>
 		<a href="#linux" id="linux-tab" role="tab" aria-controls="linux-soln">Linux</a>
 	</div>
-	<div class="soln" id="windows-soln" role="tabpanel" aria-hidden="true">
+	<div class="soln" id="windows-soln" role="tabpanel" aria-labelledby="windows-tab" aria-hidden="true">
 		<p>Here is how to recover your lost bookmarks (Windows):</p>
 		<ol>
 			<li>Copy <code>C:\Users\%username%\AppData\Local\Google\Chrome\User Data</code> into File Explorer.</li>
@@ -267,7 +268,7 @@ footer a {
 			<li>Your bookmarks should now be imported back to Chrome.</li>
 		</ol>
 	</div>
-	<div class="soln" id="mac-soln" role="tabpanel" aria-hidden="true">
+	<div class="soln" id="mac-soln" role="tabpanel" aria-labelledby="mac-tab" aria-hidden="true">
 		<p>Here is how to recover your lost bookmarks (Mac):</p>
 		<ol>
 			<li>In the Mac menu bar at the top of the screen, click Go.</li>
@@ -283,7 +284,7 @@ footer a {
 			<li>Your bookmarks should now be imported back to Chrome.</li>
 		</ol>
 	</div>
-	<div class="soln" id="linux-soln" role="tabpanel" aria-hidden="true">
+	<div class="soln" id="linux-soln" role="tabpanel" aria-labelledby="linux-tab" aria-hidden="true">
 		<p>Here is how to recover your lost bookmarks (Linux):</p>
 		<ol>
 			<li>Open your file explorer (<i>Nautilus, Dolphin ...</i>).</li>
@@ -313,8 +314,8 @@ footer a {
 	</form>
 	<h3>Other ways to recover bookmarks</h3>
 	<div class="zip">
-		<a class="zip-h" aria-expanded="false" aria-controls="zip-1" href="#">Windows System Protection</a>
-		<div id="zip-1" aria-hidden="true" class="zip-content">
+		<a id="zip-h-1" class="zip-h" aria-expanded="false" aria-controls="zip-1" href="#">Windows System Protection</a>
+		<div id="zip-1" aria-labelledby="zip-h-1" aria-hidden="true" class="zip-content">
 			<p>If <a href="http://windows.microsoft.com/en-us/windows7/what-is-system-protection">Windows System Protection</a> is turned on, Windows will automatically stores previous versions of your files. To restore such a version of your bookmarks files:</p>
 			<ol>
 				<li>Follow the step 1 and 2 above to find your bookmarks files.</li>
@@ -326,20 +327,20 @@ footer a {
 		</div>
 	</div>
 	<div class="zip">
-		<a class="zip-h" aria-expanded="false" aria-controls="zip-2" href="#">Personal backup</a>
-		<div id="zip-2" aria-hidden="true" class="zip-content">
+		<a id="zip-h-2" class="zip-h" aria-expanded="false" aria-controls="zip-2" href="#">Personal backup</a>
+		<div id="zip-2" aria-labelledby="zip-h-2" aria-hidden="true" class="zip-content">
 			<p>In the case when backups of your computer are available, find the bookmarks files in the backups, upload them to this tool and continue with the steps above.</p>
 		</div>
 	</div>
 	<div class="zip">
-		<a class="zip-h" aria-expanded="false" aria-controls="zip-3" href="#">Recover from old devices</a>
-		<div id="zip-3" aria-hidden="true" class="zip-content">
+		<a id="zip-h-3" class="zip-h" aria-expanded="false" aria-controls="zip-3" href="#">Recover from old devices</a>
+		<div id="zip-3" aria-labelledby="zip-h-3" aria-hidden="true" class="zip-content">
 			<p>Do you have a device (e.g: old laptop) that is signed in to your Google Account and it hasn't been synced since the moment your bookmarks were lost? If so, find the files in this device, upload them to this tool and continue with the steps above.</p>
 		</div>
 	</div>
 	<div class="zip">
-		<a class="zip-h" aria-expanded="false" aria-controls="zip-4" href="#">Tips and tricks</a>
-		<div id="zip-4" aria-hidden="true" class="zip-content">
+		<a id="zip-h-4" class="zip-h" aria-expanded="false" aria-controls="zip-4" href="#">Tips and tricks</a>
+		<div id="zip-4" aria-labelledby="zip-h-4" aria-hidden="true" class="zip-content">
 			<p>You can use this tool or <i>Export bookmarks</i> function in Bookmark Manager to generate HTML file that can be used as archive/backup of your bookmarks. Regularly making backup is useful in case your bookmarks get lost again in the future.</p>
 		</div>
 	</div>
