@@ -361,6 +361,7 @@ footer a {
 
 <script>
 'use strict';
+(function() {
 function parse(backup) {
 	function walk(data) {
 		if (data.type == 'folder') {
@@ -405,7 +406,7 @@ function parse(backup) {
 function readFile(file) {
 	var reader = new FileReader();
 	var li = document.createElement('li');
-	li.innerHTML = '<strong>Last updated: ' + (file.lastModifiedDate ? file.lastModifiedDate.toLocaleDateString() : 'n/a') + '</strong> (' + file.size + 'B) ';
+	li.innerHTML = '<strong>Last updated: ' + (file.lastModifiedDate !== undefined ? file.lastModifiedDate.toLocaleDateString() : 'n/a') + '</strong> (' + file.size + 'B) ';
 	reader.onloadend = function() {
 		try {
 			var a = parse(JSON.parse(reader.result));
@@ -490,9 +491,10 @@ function toggleZip(e) {
 	this.setAttribute('aria-expanded', visible);
 	this.nextElementSibling.setAttribute('aria-hidden', !visible);
 }
-[].forEach.call(document.querySelectorAll('.zip-h'), function(h) {
+for (const h of document.querySelectorAll('.zip-h')) {
 	h.addEventListener('click', toggleZip, false);
-});
+}
+}());
 </script>
 </body>
 </html>
