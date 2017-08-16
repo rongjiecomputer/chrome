@@ -134,13 +134,13 @@ code {
 .is_dragover svg {
 	fill: #4386fa;
 }
-span {
+label {
 	position: relative;
 }
-span b {
+label b {
 	color: #000;
 }
-span:hover b {
+label:hover b {
 	color: #4386fa;
 }
 input[type="file"] {
@@ -194,6 +194,9 @@ output a[data-disabled] {
 	margin: 0;
 	position: relative;
 	z-index: 1;
+	width: 100%;
+	border: 0;
+	text-align: left;
 }
 .zip-h:hover {
 	text-decoration: none;
@@ -249,12 +252,12 @@ footer a {
 </header>
 
 <main>
-	<div id="tabs" role="tablist">
+	<div id="tabs" role="tablist" aria-label="Instructions">
 		<a href="#windows" id="windows-tab" role="tab" aria-controls="windows-soln">Windows</a>
 		<a href="#mac" id="mac-tab" role="tab" aria-controls="mac-soln">Mac</a>
 		<a href="#linux" id="linux-tab" role="tab" aria-controls="linux-soln">Linux</a>
 	</div>
-	<div class="soln" id="windows-soln" role="tabpanel" aria-labelledby="windows-tab" aria-hidden="true">
+	<div class="soln" id="windows-soln" role="tabpanel" aria-labelledby="windows-tab" aria-hidden="true" tabindex="0">
 		<p>Here is how to recover your lost bookmarks (Windows):</p>
 		<ol>
 			<li>Copy <code>C:\Users\%username%\AppData\Local\Google\Chrome\User Data</code> into File Explorer.</li>
@@ -268,7 +271,7 @@ footer a {
 			<li>Your bookmarks should now be imported back to Chrome.</li>
 		</ol>
 	</div>
-	<div class="soln" id="mac-soln" role="tabpanel" aria-labelledby="mac-tab" aria-hidden="true">
+	<div class="soln" id="mac-soln" role="tabpanel" aria-labelledby="mac-tab" aria-hidden="true" tabindex="0">
 		<p>Here is how to recover your lost bookmarks (Mac):</p>
 		<ol>
 			<li>In the Mac menu bar at the top of the screen, click Go.</li>
@@ -284,7 +287,7 @@ footer a {
 			<li>Your bookmarks should now be imported back to Chrome.</li>
 		</ol>
 	</div>
-	<div class="soln" id="linux-soln" role="tabpanel" aria-labelledby="linux-tab" aria-hidden="true">
+	<div class="soln" id="linux-soln" role="tabpanel" aria-labelledby="linux-tab" aria-hidden="true" tabindex="0">
 		<p>Here is how to recover your lost bookmarks (Linux):</p>
 		<ol>
 			<li>Open your file explorer (<i>Nautilus, Dolphin ...</i>).</li>
@@ -301,21 +304,21 @@ footer a {
 	</div>
 	<form id="block" tabindex="-1">
 		<div id="drop_zone">
-			<svg fill="#bbb" width="48" height="48" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+			<svg aria-hidden="true" fill="#bbb" width="48" height="48" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
 				<path d="M9 16h6v-6h4l-7-7-7 7h4zm-4 2h14v2H5z"/>
 			</svg>
-			<span>
-				<input tabindex="0" type="file" multiple id="input" aria-label="Your Chrome Bookmarks files" aria-describedby="tooltip"/>
+			<label>
+				<input tabindex="0" type="file" multiple id="input" aria-describedby="tooltip"/>
 				<b>Choose a file</b> or drag it here
-			</span>
+			</label>
 			<div role="tooltip" id="tooltip">Search with the keyword of "Bookmarks" and select all the files found.</div>
 		</div>
 		<output id="output" role="alert" aria-live="assertive" aria-hidden="true">The HTML file will be produced here later.</output>
 	</form>
 	<h3>Other ways to recover bookmarks</h3>
 	<div class="zip">
-		<a id="zip-h-1" class="zip-h" aria-expanded="false" aria-controls="zip-1" href="#">Windows System Protection</a>
-		<div id="zip-1" aria-labelledby="zip-h-1" aria-hidden="true" class="zip-content">
+		<button id="zip-h-1" class="zip-h" aria-expanded="false" aria-controls="zip-1">Windows System Protection</button>
+		<div id="zip-1" role="region" aria-labelledby="zip-h-1" aria-hidden="true" class="zip-content">
 			<p>If <a href="http://windows.microsoft.com/en-us/windows7/what-is-system-protection">Windows System Protection</a> is turned on, Windows will automatically stores previous versions of your files. To restore such a version of your bookmarks files:</p>
 			<ol>
 				<li>Follow the step 1 and 2 above to find your bookmarks files.</li>
@@ -327,20 +330,20 @@ footer a {
 		</div>
 	</div>
 	<div class="zip">
-		<a id="zip-h-2" class="zip-h" aria-expanded="false" aria-controls="zip-2" href="#">Personal backup</a>
-		<div id="zip-2" aria-labelledby="zip-h-2" aria-hidden="true" class="zip-content">
+		<button id="zip-h-2" class="zip-h" aria-expanded="false" aria-controls="zip-2">Personal backup</button>
+		<div id="zip-2" role="region" aria-labelledby="zip-h-2" aria-hidden="true" class="zip-content">
 			<p>In the case when backups of your computer are available, find the bookmarks files in the backups, upload them to this tool and continue with the steps above.</p>
 		</div>
 	</div>
 	<div class="zip">
-		<a id="zip-h-3" class="zip-h" aria-expanded="false" aria-controls="zip-3" href="#">Recover from old devices</a>
-		<div id="zip-3" aria-labelledby="zip-h-3" aria-hidden="true" class="zip-content">
+		<button id="zip-h-3" class="zip-h" aria-expanded="false" aria-controls="zip-3">Recover from old devices</button>
+		<div id="zip-3" role="region" aria-labelledby="zip-h-3" aria-hidden="true" class="zip-content">
 			<p>Do you have a device (e.g: old laptop) that is signed in to your Google Account and it hasn't been synced since the moment your bookmarks were lost? If so, find the files in this device, upload them to this tool and continue with the steps above.</p>
 		</div>
 	</div>
 	<div class="zip">
-		<a id="zip-h-4" class="zip-h" aria-expanded="false" aria-controls="zip-4" href="#">Tips and tricks</a>
-		<div id="zip-4" aria-labelledby="zip-h-4" aria-hidden="true" class="zip-content">
+		<button id="zip-h-4" class="zip-h" aria-expanded="false" aria-controls="zip-4">Tips and tricks</button>
+		<div id="zip-4" role="region" aria-labelledby="zip-h-4" aria-hidden="true" class="zip-content">
 			<p>You can use this tool or <i>Export bookmarks</i> function in Bookmark Manager to generate HTML file that can be used as archive/backup of your bookmarks. Regularly making backup is useful in case your bookmarks get lost again in the future.</p>
 		</div>
 	</div>
@@ -486,12 +489,11 @@ window.addEventListener('hashchange', handleHashChange, false);
 if (location.hash == '') location.hash = '#windows';
 handleHashChange();
 function toggleZip(e) {
-	e.preventDefault();
 	var visible = this.parentNode.classList.toggle('unzip');
 	this.setAttribute('aria-expanded', visible);
 	this.nextElementSibling.setAttribute('aria-hidden', !visible);
 }
-for (const h of document.querySelectorAll('.zip-h')) {
+for (const h of Array.from(document.querySelectorAll('.zip-h'))) {
 	h.addEventListener('click', toggleZip, false);
 }
 }());
