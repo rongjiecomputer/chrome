@@ -331,7 +331,7 @@ footer a {
 	<div class="zip">
 		<button id="zip-h-4" class="zip-h" aria-expanded="false" aria-controls="zip-4">Tips and tricks</button>
 		<div id="zip-4" role="region" aria-labelledby="zip-h-4" aria-hidden="true" class="zip-content">
-			<p>You can use this tool or <i>Export bookmarks</i> function in Bookmark Manager to generate HTML file that can be used as archive/backup of your bookmarks. Regularly making backup is useful in case your bookmarks get lost again in the future.</p>
+			<p>You can use this tool or <i>Export Bookmarks</i> function in Bookmark Manager to generate HTML file that can be used as archive/backup of your bookmarks. Regularly making backup is useful in case your bookmarks get lost again in the future.</p>
 		</div>
 	</div>
 	<p><i>Disclaimer: this is not an official Google product.</i></p>
@@ -352,6 +352,7 @@ footer a {
 <script>
 'use strict';
 (function() {
+var $ = document.querySelector.bind(document);
 function parse(backup) {
 	function walk(data) {
 		if (data.type == 'folder') {
@@ -408,8 +409,8 @@ function readFile(file) {
 	reader.readAsText(file);
 	return li;
 }
-var input = document.getElementById('input');
-var output = document.getElementById('output');
+var input = $('#input');
+var output = $('#output');
 function handleFile(e) {
 	var files = e.target.files;
 	output.textContent = 'Loading ...';
@@ -450,27 +451,26 @@ var dropZone = document.getElementById('drop_zone');
 dropZone.addEventListener('dragover', handleDragOver, false);
 dropZone.addEventListener('drop', handleFileSelect, false);
 dropZone.addEventListener('dragleave', handleDragLeave, false);
-var tabs = document.getElementById('tabs');
-var solns = {};
-solns['#windows'] = document.getElementById('windows-soln');
-solns['#mac'] = document.getElementById('mac-soln');
-solns['#linux'] = document.getElementById('linux-soln');
+var solns = ["#windows", "#mac", "#linux"];
 function handleHashChange(e) {
-	for (var tab = tabs.firstElementChild; tab; tab = tab.nextElementSibling) {
-		tab.classList.remove('active');
-		tab.setAttribute('aria-selected', false);
-	}
-	for (var soln in solns) {
-		solns[soln].classList.remove('show');
-		solns[soln].setAttribute('aria-hidden', true);
-	}
 	var hash = location.hash;
-	var tab = tabs.querySelector(hash+'-tab');
-	tab.classList.add('active');
-	tab.setAttribute('aria-selected', true);
-	var soln = solns[hash];
-	soln.classList.add('show');
-	soln.setAttribute('aria-hidden', false);
+	for (var i = 0; i < solns.length; i++) {
+		var id = solns[i];
+		var tab = $(id + '-tab');
+		var soln = $(id + '-soln');
+		var visible;
+		if (hash === id) {
+			tab.classList.add('active');
+			soln.classList.add('show');
+			visible = true;
+		} else {
+			tab.classList.remove('active');
+			soln.classList.remove('show');
+			visible - false;
+		}
+		tab.setAttribute('aria-selected', visible);
+		soln.setAttribute('aria-hidden', !visible);
+	}
 }
 window.addEventListener('hashchange', handleHashChange, false);
 if (location.hash == '') location.hash = '#windows';
@@ -480,8 +480,9 @@ function toggleZip(e) {
 	this.setAttribute('aria-expanded', visible);
 	this.nextElementSibling.setAttribute('aria-hidden', !visible);
 }
-for (const h of Array.from(document.querySelectorAll('.zip-h'))) {
-	h.addEventListener('click', toggleZip, false);
+var zipH = document.querySelectorAll('.zip-h');
+for (var i = 0; i < zipH.length; i++) {
+	zipH[i].addEventListener('click', toggleZip, false);
 }
 }());
 </script>
