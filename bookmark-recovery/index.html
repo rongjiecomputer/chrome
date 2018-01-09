@@ -353,35 +353,48 @@ footer a {
 'use strict';
 (function() {
 var $ = document.querySelector.bind(document);
-function parse(backup) {
-	function walk(data) {
-		if (data.type == 'folder') {
-			html += '<DT><H3 ADD_DATE="' + data.date_added + '" LAST_MODIFIED="' + data.date_modified + '">' + data.name + '</H3>\n';
-			html += '<DL>\n'
-			for (var i = 0; i < data.children.length; i++) {
-				walk(data.children[i]);
-			}
-			html += '</DL></DT>\n';
-		} else { // data.type == 'url'
-			html += '<DT><A HREF="' + data.url + '" ADD_DATE="' + data.date_added + '">' + data.name + '</A></DT>\n';
+function Bookmark(raw) {
+	this.tree = JSON.parse(raw);
+	this.html = '';
+	this.count = 0;
+	this.first = true;
+}
+function chromeTime2TimeT(time) {
+	return Math.floor((time - 11644473600000000) / 1000000);
+}
+Bookmark.prototype.walk = function(node) {
+	if (node.type === 'folder') {
+		this.html += '<DT><H3 ADD_DATE="' + chromeTime2TimeT(node.date_added) + '" LAST_MODIFIED="' + chromeTime2TimeT(node.date_modified) + '"';
+		if (this.first) {
+			this.html += ' PERSONAL_TOOLBAR_FOLDER="true"';
+			this.first = false;
 		}
+		this.html += '>' + node.name + '</H3>\n';
+		this.html += '<DL><p>\n'
+		node.children.forEach(this.walk.bind(this));
+		this.html += '</DL><p>\n';
+	} else { // node.type == 'url'
+		this.html += '<DT><A HREF="' + node.url + '" ADD_DATE="' + chromeTime2TimeT(node.date_added) + '">' + node.name + '</A>\n';
+		this.count++;
 	}
-	var html = '<!DOCTYPE NETSCAPE-Bookmark-file-1><META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8"><TITLE>Bookmarks</TITLE><H1>Bookmarks</H1>\n';
-	html += '<DL>\n';
-	var children = backup.roots.bookmark_bar.children;
-	for (var i = 0; i < children.length; i++) {
-		walk(children[i]);
-	}
-	walk(backup.roots.other);
-	walk(backup.roots.synced);
-	html += '</DL>\n';
-	html += '<style>dt, dl { padding-left: 12px; }</style>\n';
-	var blob = new Blob([html], {type: 'text/plain'});
+}
+Bookmark.prototype.parse = function() {
+	this.html = '<!DOCTYPE NETSCAPE-Bookmark-file-1><META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8"><TITLE>Bookmarks</TITLE><H1>Bookmarks</H1>\n';
+	this.html += '<DL><p>\n';
+	var roots = this.tree.roots;
+	this.walk(roots.bookmark_bar);
+	if (roots.other.children.length > 0)
+	  this.walk(roots.other);
+	if (roots.synced.children.length > 0)
+	  this.walk(roots.synced);
+	this.html += '<style>dt, dl { padding-left: 12px; }</style>\n';
+}
+Bookmark.prototype.newLink = function() {
+	var blob = new Blob([this.html], {type: 'text/plain'});
 	var a = document.createElement('a');
 	a.download = 'bookmark_backup.html';
 	a.href = window.URL.createObjectURL(blob);
-	a.textContent = 'Download ready';
-	a.dataset.downloadurl = ['text/plain', a.download, a.href].join(':');
+	a.textContent = 'Download ready (' + this.count + ' bookmarks found)';
 	a.onclick = function(e) {
 		if ('disabled' in this.dataset) {
 			return false;
@@ -400,8 +413,9 @@ function readFile(file) {
 	li.innerHTML = '<strong>Last updated: ' + (file.lastModifiedDate !== undefined ? file.lastModifiedDate.toLocaleDateString() : 'n/a') + '</strong> (' + file.size + 'B) ';
 	reader.onloadend = function() {
 		try {
-			var a = parse(JSON.parse(reader.result));
-			li.appendChild(a);
+			var bookmark = new Bookmark(reader.result);
+			bookmark.parse();
+			li.appendChild(bookmark.newLink());
 		} catch(e) {
 			li.innerHTML += '<b>Error! The file is invalid. Try again!</b>';
 		}
