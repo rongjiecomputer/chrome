@@ -256,6 +256,7 @@ footer a {
 		<a href="#windows" id="windows-tab" role="tab" aria-controls="windows-soln">Windows</a>
 		<a href="#mac" id="mac-tab" role="tab" aria-controls="mac-soln">Mac</a>
 		<a href="#linux" id="linux-tab" role="tab" aria-controls="linux-soln">Linux</a>
+		<a href="#google" id="google-tab" role="tab" aria-controls="google-soln">Google Server</a>
 	</div>
 	<div class="soln" id="windows-soln" role="tabpanel" aria-labelledby="windows-tab" aria-hidden="true" tabindex="0">
 		<p>Here is how to recover your lost bookmarks (Windows):</p>
@@ -296,7 +297,26 @@ footer a {
 			<li>Select all the files with mouse and drag them to the block below.</li>
 			<li>Download all the HTML files.</li>
 			<li>Open each HTML file with Chrome and determine the HTML file that contains your bookmarks. (<i>Note: The largest file is most likely the correct one</i>)</li>
-      <li>In your Chrome, click the Chrome menu icon and go to Bookmarks &gt; Bookmark Manager.</li>
+			<li>In your Chrome, click the Chrome menu icon and go to Bookmarks &gt; Bookmark Manager.</li>
+			<li>Click the menu icon beside search icon and click Import Bookmarks.</li>
+			<li>Select the HTML file that contains your bookmarks.</li>
+			<li>Your bookmarks should now be imported back to Chrome.</li>
+		</ol>
+	</div>
+	<div class="soln" id="google-soln" role="tabpanel" aria-labelledby="google-tab" aria-hidden="true" tabindex="0">
+		<p>If you are sure that Chrome sync data stored in Google server still have your bookmarks, here is how to retrieve them from Google server:</p>
+		<ol>
+			<li>Go to <a href="https://takeout.google.com/settings/takeout">Google Takeout</a> and sign in to the Google Account used for Chrome Sync.</li>
+			<li>Click "Select None" button.</li>
+			<li>Check "Chrome" in product list.</li>
+			<li>Expand "All Chrome data types".</li>
+			<li>Click "Select Chrome data" option.</li>
+			<li>In the popup, check "Bookmarks" option and uncheck the rest.</li>
+			<li>Scroll down to the bottom of the page and click "Next" button.</li>
+			<li>Click "Create archive" button.</li>
+			<li>Download and unzip the archive.</li>
+			<li>In the unzipped folder, navigate to "Chrome" folder. The <code>Bookmarks.html</code> file is the one we need.</li>
+			<li>In your Chrome, click the Chrome menu icon and go to Bookmarks &gt; Bookmark Manager.</li>
 			<li>Click the menu icon beside search icon and click Import Bookmarks.</li>
 			<li>Select the HTML file that contains your bookmarks.</li>
 			<li>Your bookmarks should now be imported back to Chrome.</li>
@@ -384,9 +404,9 @@ Bookmark.prototype.parse = function() {
 	var roots = this.tree.roots;
 	this.walk(roots.bookmark_bar);
 	if (roots.other.children.length > 0)
-	  this.walk(roots.other);
+		this.walk(roots.other);
 	if (roots.synced.children.length > 0)
-	  this.walk(roots.synced);
+		this.walk(roots.synced);
 	this.html += '<style>dt, dl { padding-left: 12px; }</style>\n';
 }
 Bookmark.prototype.newLink = function() {
@@ -465,7 +485,7 @@ var dropZone = document.getElementById('drop_zone');
 dropZone.addEventListener('dragover', handleDragOver, false);
 dropZone.addEventListener('drop', handleFileSelect, false);
 dropZone.addEventListener('dragleave', handleDragLeave, false);
-var solns = ["#windows", "#mac", "#linux"];
+var solns = ["#windows", "#mac", "#linux", "#google"];
 function handleHashChange(e) {
 	var hash = location.hash;
 	for (var i = 0; i < solns.length; i++) {
